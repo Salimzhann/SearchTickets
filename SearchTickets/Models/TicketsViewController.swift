@@ -41,28 +41,52 @@ class TicketsViewController: UIViewController {
         
     private let searchIcon: UIImageView = {
             let imageView = UIImageView()
-            imageView.image = UIImage(systemName: "magnifyingglass")
+            imageView.image = UIImage(named: "search")
             imageView.tintColor = .white
             return imageView
     }()
         
     private let fromTextField: UITextField = {
             let label = UITextField()
-            label.placeholder = "Минск"
+            label.attributedPlaceholder = NSAttributedString(string: "Минск", attributes: [.foregroundColor: UIColor.lightGray])
             label.textColor = .white
-            label.textAlignment = .center
+            label.textAlignment = .left
+            label.backgroundColor = UIColor(hex: "3E3F43")
             label.font = UIFont.systemFont(ofSize: 22, weight: .regular)
             return label
+    }()
+    
+    let musicLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Музыкально отлететь"
+        label.font = UIFont.systemFont(ofSize: 22, weight: .semibold)
+        label.textColor = .white
+        return label
     }()
         
     private let toTextField: UITextField = {
             let label = UITextField()
-            label.placeholder = "Куда - Турция"
+            label.attributedPlaceholder = NSAttributedString(string: "Куда - Турция", attributes: [.foregroundColor: UIColor.lightGray])
             label.textColor = .white
-            label.textAlignment = .center
+        label.textAlignment = .left
             label.font = UIFont.systemFont(ofSize: 18, weight: .regular)
             return label
     }()
+    
+    let musicCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.minimumLineSpacing = 30
+        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        cv.backgroundColor = .black
+        cv.showsHorizontalScrollIndicator = false
+        cv.register(MusicCollectionViewCell.self, forCellWithReuseIdentifier: MusicCollectionViewCell.identifier)
+        return cv
+    }()
+    
+    let singerArray: [String] = ["Die Antwoord", "Socrat& Lera", "Лампабикт"]
+    let coutryArray: [String] = ["Будапешт", "Санкт- Петербург", "Москва"]
+    let priceArray: [String] = ["22 264", "2 390", "2 390"]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,7 +95,7 @@ class TicketsViewController: UIViewController {
     }
     
     func setupUI() {
-        [mainLabel, containerView,  subContainer, fromTextField, toTextField, searchIcon].forEach({
+        [mainLabel, containerView,  subContainer, fromTextField, toTextField, searchIcon, musicLabel, musicCollectionView].forEach({
             $0.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview($0)
         })
@@ -92,25 +116,44 @@ class TicketsViewController: UIViewController {
             
             searchIcon.topAnchor.constraint(equalTo: subContainer.topAnchor, constant: 33),
             searchIcon.leadingAnchor.constraint(equalTo: subContainer.leadingAnchor, constant: 8),
+            searchIcon.heightAnchor.constraint(equalToConstant: 24),
+            searchIcon.widthAnchor.constraint(equalToConstant: 24),
             
-            fromTextField.topAnchor.constraint(equalTo: subContainer.topAnchor, constant: 8),
-            fromTextField.leadingAnchor.constraint(equalTo: searchIcon.trailingAnchor, constant: 8),
+            fromTextField.topAnchor.constraint(equalTo: subContainer.topAnchor, constant: 16),
+            fromTextField.leadingAnchor.constraint(equalTo: searchIcon.trailingAnchor, constant: 16),
             
             toTextField.topAnchor.constraint(equalTo: fromTextField.bottomAnchor, constant: 5),
-            toTextField.leadingAnchor.constraint(equalTo: searchIcon.trailingAnchor, constant: 8)
+            toTextField.leadingAnchor.constraint(equalTo: searchIcon.trailingAnchor, constant: 16),
             
-
+            musicLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 302),
+            musicLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            
+            musicCollectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: 354),
+            musicCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            musicCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            musicCollectionView.heightAnchor.constraint(equalToConstant: 213.16)
+            
+            
         ])
+        
+        musicCollectionView.dataSource = self
+        musicCollectionView.delegate = self
     }
+}
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+extension TicketsViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        singerArray.count
     }
-    */
-
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = musicCollectionView.dequeueReusableCell(withReuseIdentifier: MusicCollectionViewCell.identifier, for: indexPath) as! MusicCollectionViewCell
+        cell.configure(singerArray[indexPath.item], country: coutryArray[indexPath.item], price: priceArray[indexPath.item])
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 140, height: 213.16)
+    }
+    
 }
