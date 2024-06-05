@@ -19,6 +19,8 @@
 		19A944812C0EE07000A658AD /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A944802C0EE07000A658AD /* ProfileViewController.swift */; };
 		19A944862C0EED6F00A658AD /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A944852C0EED6F00A658AD /* Extensions.swift */; };
 		19A944882C102E5500A658AD /* MusicCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A944872C102E5500A658AD /* MusicCollectionViewCell.swift */; };
+		19A9448C2C104A7C00A658AD /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A9448B2C104A7C00A658AD /* CustomButton.swift */; };
+		19A9448E2C10522300A658AD /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A9448D2C10522300A658AD /* SearchViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +38,8 @@
 		19A944802C0EE07000A658AD /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		19A944852C0EED6F00A658AD /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		19A944872C102E5500A658AD /* MusicCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicCollectionViewCell.swift; sourceTree = "<group>"; };
+		19A9448B2C104A7C00A658AD /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
+		19A9448D2C10522300A658AD /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,9 +72,6 @@
 		19A944632C0EDF5100A658AD /* SearchTickets */ = {
 			isa = PBXGroup;
 			children = (
-				19A944642C0EDF5100A658AD /* AppDelegate.swift */,
-				19A944662C0EDF5100A658AD /* SceneDelegate.swift */,
-				19A944682C0EDF5100A658AD /* TabBar.swift */,
 				19A9448A2C102E7800A658AD /* Extensions */,
 				19A944892C102E5A00A658AD /* Cells */,
 				19A944822C0EE07600A658AD /* Models */,
@@ -85,6 +86,7 @@
 			isa = PBXGroup;
 			children = (
 				19A944782C0EE04400A658AD /* TicketsViewController.swift */,
+				19A9448D2C10522300A658AD /* SearchViewController.swift */,
 				19A9447A2C0EE04E00A658AD /* HotelsViewController.swift */,
 				19A9447C2C0EE05A00A658AD /* ShortViewController.swift */,
 				19A9447E2C0EE06200A658AD /* FollowsViewController.swift */,
@@ -104,6 +106,10 @@
 		19A9448A2C102E7800A658AD /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				19A944682C0EDF5100A658AD /* TabBar.swift */,
+				19A944662C0EDF5100A658AD /* SceneDelegate.swift */,
+				19A944642C0EDF5100A658AD /* AppDelegate.swift */,
+				19A9448B2C104A7C00A658AD /* CustomButton.swift */,
 				19A944852C0EED6F00A658AD /* Extensions.swift */,
 			);
 			path = Extensions;
@@ -185,7 +191,9 @@
 				19A944652C0EDF5100A658AD /* AppDelegate.swift in Sources */,
 				19A9447D2C0EE05A00A658AD /* ShortViewController.swift in Sources */,
 				19A9447B2C0EE04E00A658AD /* HotelsViewController.swift in Sources */,
+				19A9448E2C10522300A658AD /* SearchViewController.swift in Sources */,
 				19A944882C102E5500A658AD /* MusicCollectionViewCell.swift in Sources */,
+				19A9448C2C104A7C00A658AD /* CustomButton.swift in Sources */,
 				19A944672C0EDF5100A658AD /* SceneDelegate.swift in Sources */,
 				19A944812C0EE07000A658AD /* ProfileViewController.swift in Sources */,
 				19A9447F2C0EE06200A658AD /* FollowsViewController.swift in Sources */,

@@ -28,6 +28,13 @@ class TicketsViewController: UIViewController {
             return view
     }()
     
+    let button: UIButton = {
+        let button = UIButton()
+        button.isOpaque = true
+        button.addTarget(self, action: #selector(handleSearchButton), for: .touchUpInside)
+        return button
+    }()
+    
     private let subContainer: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor(hex: "#3E3F43")
@@ -54,6 +61,10 @@ class TicketsViewController: UIViewController {
             label.backgroundColor = UIColor(hex: "3E3F43")
             label.font = UIFont.systemFont(ofSize: 22, weight: .regular)
             return label
+    }()
+    let customButton: UIButton = {
+        let button = CustomButton()
+        return button
     }()
     
     let musicLabel: UILabel = {
@@ -96,7 +107,7 @@ class TicketsViewController: UIViewController {
     }
     
     func setupUI() {
-        [mainLabel, containerView,  subContainer, fromTextField, toTextField, searchIcon, musicLabel, musicCollectionView].forEach({
+        [mainLabel, musicLabel, musicCollectionView, customButton, button].forEach({
             $0.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview($0)
         })
@@ -104,27 +115,16 @@ class TicketsViewController: UIViewController {
         NSLayoutConstraint.activate([
             mainLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 58),
             mainLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+          
+            customButton.topAnchor.constraint(equalTo: mainLabel.bottomAnchor, constant: 16),
+            customButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            customButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            customButton.heightAnchor.constraint(equalToConstant: 122),
             
-            containerView.topAnchor.constraint(equalTo: view.topAnchor, constant: 148),
-            containerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            containerView.heightAnchor.constraint(equalToConstant: 122),
-            containerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            
-            subContainer.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 16),
-            subContainer.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -16),
-            subContainer.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
-            subContainer.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
-            
-            searchIcon.topAnchor.constraint(equalTo: subContainer.topAnchor, constant: 33),
-            searchIcon.leadingAnchor.constraint(equalTo: subContainer.leadingAnchor, constant: 8),
-            searchIcon.heightAnchor.constraint(equalToConstant: 24),
-            searchIcon.widthAnchor.constraint(equalToConstant: 24),
-            
-            fromTextField.topAnchor.constraint(equalTo: subContainer.topAnchor, constant: 16),
-            fromTextField.leadingAnchor.constraint(equalTo: searchIcon.trailingAnchor, constant: 16),
-            
-            toTextField.topAnchor.constraint(equalTo: fromTextField.bottomAnchor, constant: 5),
-            toTextField.leadingAnchor.constraint(equalTo: searchIcon.trailingAnchor, constant: 16),
+            button.topAnchor.constraint(equalTo: mainLabel.bottomAnchor, constant: 16),
+            button.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            button.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            button.heightAnchor.constraint(equalToConstant: 122),
             
             musicLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 302),
             musicLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
@@ -136,11 +136,9 @@ class TicketsViewController: UIViewController {
             
             
         ])
-        
         musicCollectionView.dataSource = self
         musicCollectionView.delegate = self
     }
-    
     
     func fetchData() {
         guard let url = URL(string: "https://run.mocky.io/v3/214a1713-bac0-4853-907c-a1dfc3cd05fd") else { return }
@@ -157,7 +155,6 @@ class TicketsViewController: UIViewController {
                         self.priceArray.removeAll()
                         
                         for offer in offersList {
-                            print("ID: \(offer.id), Title: \(offer.title), Town: \(offer.town), Price: \(offer.price.value)")
                             self.imageID.append(offer.id)
                             self.singerArray.append(offer.title)
                             self.coutryArray.append(offer.town)
@@ -170,6 +167,12 @@ class TicketsViewController: UIViewController {
                 print("Error decoding JSON: \(error)")
             }
         }.resume()
+    }
+    
+    
+    @objc func handleSearchButton() {
+        let vc = SearchViewController()
+        navigationController?.present(vc, animated: true)
     }
 
 
