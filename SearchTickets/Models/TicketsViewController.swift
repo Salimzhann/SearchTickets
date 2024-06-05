@@ -84,13 +84,14 @@ class TicketsViewController: UIViewController {
         return cv
     }()
     
-    let singerArray: [String] = ["Die Antwoord", "Socrat& Lera", "Лампабикт"]
-    let coutryArray: [String] = ["Будапешт", "Санкт- Петербург", "Москва"]
-    let priceArray: [String] = ["22 264", "2 390", "2 390"]
+    var imageID: [Int] = []
+    var singerArray: [String] = []
+    var coutryArray: [String] = []
+    var priceArray: [Int] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        fetchData()
         setupUI()
     }
     
@@ -139,6 +140,39 @@ class TicketsViewController: UIViewController {
         musicCollectionView.dataSource = self
         musicCollectionView.delegate = self
     }
+    
+    
+    func fetchData() {
+        guard let url = URL(string: "https://run.mocky.io/v3/214a1713-bac0-4853-907c-a1dfc3cd05fd") else { return }
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            guard let data = data, error == nil else { return }
+            
+            do {
+                let offers = try JSONDecoder().decode([String: [Offer]].self, from: data)
+                if let offersList = offers["offers"] {
+                    DispatchQueue.main.async {
+                        self.imageID.removeAll()
+                        self.singerArray.removeAll()
+                        self.coutryArray.removeAll()
+                        self.priceArray.removeAll()
+                        
+                        for offer in offersList {
+                            print("ID: \(offer.id), Title: \(offer.title), Town: \(offer.town), Price: \(offer.price.value)")
+                            self.imageID.append(offer.id)
+                            self.singerArray.append(offer.title)
+                            self.coutryArray.append(offer.town)
+                            self.priceArray.append(offer.price.value)
+                        }
+                        self.musicCollectionView.reloadData()
+                    }
+                }
+            } catch {
+                print("Error decoding JSON: \(error)")
+            }
+        }.resume()
+    }
+
+
 }
 
 extension TicketsViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -148,7 +182,7 @@ extension TicketsViewController: UICollectionViewDelegate, UICollectionViewDataS
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = musicCollectionView.dequeueReusableCell(withReuseIdentifier: MusicCollectionViewCell.identifier, for: indexPath) as! MusicCollectionViewCell
-        cell.configure(singerArray[indexPath.item], country: coutryArray[indexPath.item], price: priceArray[indexPath.item])
+        cell.configure(imageID: imageID[indexPath.item] ,singer: singerArray[indexPath.item], country: coutryArray[indexPath.item], price: priceArray[indexPath.item])
         return cell
     }
     
@@ -157,3 +191,18 @@ extension TicketsViewController: UICollectionViewDelegate, UICollectionViewDataS
     }
     
 }
+struct Offer: Codable {
+    let id: Int
+    let title: String
+    let town: String
+    let price: Price
+}
+
+struct Price: Codable {
+    let value: Int
+}
+
+struct OffersResponse: Codable {
+    let offers: [Offer]
+}
+

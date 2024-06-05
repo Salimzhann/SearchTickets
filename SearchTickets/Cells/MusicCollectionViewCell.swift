@@ -80,8 +80,8 @@ class MusicCollectionViewCell: UICollectionViewCell {
         
     }
     
-    func configure(_ singer: String, country: String, price: String){
-        singerImage.image = UIImage(named: singer)
+    func configure(imageID: Int, singer: String, country: String, price: Int){
+        singerImage.image = UIImage(named: "\(imageID)")
         nameLabel.text = singer
         countryLabel.text = country
         priceLabel.text = "от \(price) ₽"
