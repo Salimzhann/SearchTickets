@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		197CA5862C118F1F00D746EF /* RecTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197CA5852C118F1F00D746EF /* RecTableViewCell.swift */; };
 		19A944652C0EDF5100A658AD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A944642C0EDF5100A658AD /* AppDelegate.swift */; };
 		19A944672C0EDF5100A658AD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A944662C0EDF5100A658AD /* SceneDelegate.swift */; };
 		19A944692C0EDF5100A658AD /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A944682C0EDF5100A658AD /* TabBar.swift */; };
@@ -24,6 +25,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		197CA5852C118F1F00D746EF /* RecTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecTableViewCell.swift; sourceTree = "<group>"; };
 		19A944612C0EDF5100A658AD /* SearchTickets.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SearchTickets.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		19A944642C0EDF5100A658AD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		19A944662C0EDF5100A658AD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -72,6 +74,7 @@
 		19A944632C0EDF5100A658AD /* SearchTickets */ = {
 			isa = PBXGroup;
 			children = (
+				19A944682C0EDF5100A658AD /* TabBar.swift */,
 				19A9448A2C102E7800A658AD /* Extensions */,
 				19A944892C102E5A00A658AD /* Cells */,
 				19A944822C0EE07600A658AD /* Models */,
@@ -99,6 +102,7 @@
 			isa = PBXGroup;
 			children = (
 				19A944872C102E5500A658AD /* MusicCollectionViewCell.swift */,
+				197CA5852C118F1F00D746EF /* RecTableViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -106,7 +110,6 @@
 		19A9448A2C102E7800A658AD /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				19A944682C0EDF5100A658AD /* TabBar.swift */,
 				19A944662C0EDF5100A658AD /* SceneDelegate.swift */,
 				19A944642C0EDF5100A658AD /* AppDelegate.swift */,
 				19A9448B2C104A7C00A658AD /* CustomButton.swift */,
@@ -187,6 +190,7 @@
 			files = (
 				19A944792C0EE04400A658AD /* TicketsViewController.swift in Sources */,
 				19A944862C0EED6F00A658AD /* Extensions.swift in Sources */,
+				197CA5862C118F1F00D746EF /* RecTableViewCell.swift in Sources */,
 				19A944692C0EDF5100A658AD /* TabBar.swift in Sources */,
 				19A944652C0EDF5100A658AD /* AppDelegate.swift in Sources */,
 				19A9447D2C0EE05A00A658AD /* ShortViewController.swift in Sources */,

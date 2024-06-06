@@ -14,6 +14,7 @@ class MusicCollectionViewCell: UICollectionViewCell {
         let image = UIImageView()
         image.contentMode = .scaleAspectFill
         image.layer.cornerRadius = 16
+        image.clipsToBounds = true
         return image
     }()
     

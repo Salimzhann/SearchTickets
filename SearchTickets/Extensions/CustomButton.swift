@@ -105,5 +105,54 @@ class CustomButton: UIButton {
         ])
     }
 }
+// MARK: -Another CustomButton-
+
+class SearchCustomButton: UIButton {
+    
+    init(icon: UIImage, title: String) {
+        super.init(frame: .zero)
+        setup(icon: icon, title: title) 
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func setup(icon: UIImage, title: String) {
+        
+        let iconImageView = UIImageView(image: icon)
+            iconImageView.contentMode = .scaleAspectFill
+            iconImageView.isUserInteractionEnabled = true
+            iconImageView.tintColor = .white
+               
+        let titleLabel = UILabel()
+            titleLabel.text = title
+            titleLabel.numberOfLines = 0
+            titleLabel.isUserInteractionEnabled = true
+            titleLabel.font = UIFont.systemFont(ofSize: 12)
+            titleLabel.textColor = .white
+            titleLabel.textAlignment = .center
+               
+               let stackView = UIStackView(arrangedSubviews: [iconImageView, titleLabel])
+               stackView.axis = .vertical
+               stackView.alignment = .center
+                stackView.isUserInteractionEnabled = true
+               stackView.spacing = 8
+               stackView.translatesAutoresizingMaskIntoConstraints = false
+               
+               self.addSubview(stackView)
+               
+               NSLayoutConstraint.activate([
+                   stackView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+                   stackView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+                   stackView.widthAnchor.constraint(equalTo: self.widthAnchor),
+                   stackView.heightAnchor.constraint(equalTo: self.heightAnchor),
+                   
+                   iconImageView.widthAnchor.constraint(equalToConstant: 48),
+                iconImageView.heightAnchor.constraint(equalToConstant: 48)
+               ])
+           }
+       }
+
 
 
