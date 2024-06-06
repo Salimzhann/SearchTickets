@@ -30,7 +30,7 @@ class CustomButton: UIButton {
         view.layer.shadowRadius = 8
         return view
     }()
-    private let searchIcon: UIImageView = {
+    let searchIcon: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "search")
         imageView.tintColor = .lightGray
