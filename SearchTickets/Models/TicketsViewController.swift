@@ -146,7 +146,7 @@ class TicketsViewController: UIViewController {
             guard let data = data, error == nil else { return }
             
             do {
-                let offers = try JSONDecoder().decode([String: [Offer]].self, from: data)
+                let offers = try JSONDecoder().decode([String: [Singer]].self, from: data)
                 if let offersList = offers["offers"] {
                     DispatchQueue.main.async {
                         self.imageID.removeAll()
@@ -194,18 +194,3 @@ extension TicketsViewController: UICollectionViewDelegate, UICollectionViewDataS
     }
     
 }
-struct Offer: Codable {
-    let id: Int
-    let title: String
-    let town: String
-    let price: Price
-}
-
-struct Price: Codable {
-    let value: Int
-}
-
-struct OffersResponse: Codable {
-    let offers: [Offer]
-}
-

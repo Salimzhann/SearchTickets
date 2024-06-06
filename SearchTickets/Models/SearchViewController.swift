@@ -16,6 +16,7 @@ class SearchViewController: UIViewController {
         tv.rowHeight = 60
         tv.backgroundColor = UIColor(hex: "#2F3035")
         tv.layer.cornerRadius = 16
+        tv.separatorColor = .lightGray
         tv.register(RecTableViewCell.self, forCellReuseIdentifier: RecTableViewCell.identifier)
         return tv
     }()
@@ -40,10 +41,10 @@ class SearchViewController: UIViewController {
     
     let fromTextField: UITextField = {
         let tf = UITextField()
-        tf.placeholder = "Минск"
+        tf.text = "Минск"
         tf.textColor = .white
         tf.clearButtonMode = .whileEditing
-        tf.attributedPlaceholder = NSAttributedString(string: tf.placeholder!, attributes: [NSAttributedString.Key.foregroundColor : UIColor.white ])
+        tf.attributedPlaceholder = NSAttributedString(string: tf.text!, attributes: [NSAttributedString.Key.foregroundColor : UIColor.lightGray ])
         return tf
     }()
     
@@ -131,7 +132,7 @@ class SearchViewController: UIViewController {
             recommendTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             recommendTableView.heightAnchor.constraint(equalToConstant: 216)
         ])
-        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 20))
+        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 15))
         recommendTableView.tableHeaderView = headerView
         
         addCancelButton(to: fromTextField)
@@ -141,6 +142,8 @@ class SearchViewController: UIViewController {
         
         recommendTableView.dataSource = self
         recommendTableView.delegate = self
+        fromTextField.delegate = self
+        toTextField.delegate = self
     }
     
     func addCancelButton(to textField: UITextField) {
@@ -163,7 +166,7 @@ class SearchViewController: UIViewController {
     }
 }
 
-extension SearchViewController: UITableViewDelegate, UITableViewDataSource{
+extension SearchViewController: UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return countryArray.count
     }
@@ -173,6 +176,42 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource{
         cell.configure(country: countryArray[indexPath.item])
         return cell
     }
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+            if textField == fromTextField {
+                toTextField.becomeFirstResponder()
+            } else if textField == toTextField {
+                textField.resignFirstResponder()
+                if let from = fromTextField.text, let to = toTextField.text,
+                           !from.isEmpty, !to.isEmpty {
+                            fetchData()
+                        } else {
+                            showAlert(message: "Please enter both 'from' and 'to' locations")
+                            return true
+                        }
+            }
+            return true
+        }
     
-    
+    func showAlert(message: String) {
+        let alert = UIAlertController(title: "Alert", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        present(alert, animated: true, completion: nil)
+    }
+    func fetchData() {
+        guard let url = URL(string: "https://run.mocky.io/v3/7e55bf02-89ff-4847-9eb7-7d83ef884017") else {return}
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            if let data = data {
+                do {
+                    let ticketsResponse = try JSONDecoder().decode(SearchResponse.self, from: data)
+                    for ticketOffer in ticketsResponse.ticketsOffers {
+                        print("ID: \(ticketOffer.id), Title: \(ticketOffer.title), Time Range: \(ticketOffer.timeRange), Price: \(ticketOffer.price)")
+                               }
+                }catch { print(error) }
+            }
+            
+        }.resume()
+    }
 }
+
+
