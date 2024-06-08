@@ -14,9 +14,53 @@ class SearchViewController: UIViewController {
             updateStackViewVisibility()
         }
     }
+    var isSelect: Bool = false
     
-    let label: UILabel = {
+    let followPriceBackground: UIView = {
+        let back = UIView()
+        back.layer.cornerRadius = 8
+        back.backgroundColor = UIColor(hex: "#2F3035")
+        back.isHidden = true
+        return back
+    }()
+    let followIcon: UIImageView = {
+        let image = UIImageView()
+        image.image = UIImage(named: "follows")
+        image.isHidden = true
+        return image
+    }()
+    
+    let followLabel: UILabel = {
         let label = UILabel()
+        label.text = "Подписка на цену"
+        label.textColor = .white
+        label.isHidden = true
+        return label
+    }()
+    
+    let radioButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "radioOff"), for: .normal)
+        button.contentMode = .scaleAspectFill
+        button.clipsToBounds = true
+        button.isHidden = true
+        button.addTarget(self, action: #selector(imageTapped), for: .touchUpInside)
+        return button
+    }()
+    
+    let showAllButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Посмотреть все билеты", for: .normal)
+        button.backgroundColor = UIColor(hex: "#2261BC")
+        button.setTitleColor(.white, for: .normal)
+        button.isHidden = true
+        button.addTarget(self, action: #selector(showAllButtonHandle), for: .touchUpInside)
+        button.layer.cornerRadius = 8
+        return button
+    }()
+    
+    let label: CustomLabel = {
+        let label = CustomLabel()
         label.textColor = .white
         label.layer.cornerRadius = 16
         label.clipsToBounds = true
@@ -118,7 +162,7 @@ class SearchViewController: UIViewController {
         stackView.distribution = .fillEqually
         stackView.isHidden = switchBool
         
-        [backView, rectangleImage, fromTextField,toTextField, searchImage, airplaneImage, lineImage, stackView, recommendTableView, responseTableView, label].forEach({
+        [backView, rectangleImage, fromTextField,toTextField, searchImage, airplaneImage, lineImage, stackView, recommendTableView, responseTableView, label, showAllButton,followPriceBackground , followLabel, followIcon, radioButton].forEach({
             $0.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview($0)
         })
@@ -169,13 +213,35 @@ class SearchViewController: UIViewController {
             responseTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             responseTableView.heightAnchor.constraint(equalToConstant: 288),
             
-            label.topAnchor.constraint(equalTo: view.topAnchor, constant: 201),
+            label.topAnchor.constraint(equalTo: view.topAnchor, constant: 211),
             label.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             label.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            label.heightAnchor.constraint(equalToConstant: 55)
+            label.heightAnchor.constraint(equalToConstant: 55),
+            
+            showAllButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 544),
+            showAllButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            showAllButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            showAllButton.heightAnchor.constraint(equalToConstant: 42),
+            
+            followPriceBackground.topAnchor.constraint(equalTo: view.topAnchor, constant: 610),
+            followPriceBackground.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            followPriceBackground.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            followPriceBackground.heightAnchor.constraint(equalToConstant: 51),
+            
+            followIcon.centerYAnchor.constraint(equalTo: followPriceBackground.centerYAnchor),
+            followIcon.leadingAnchor.constraint(equalTo: followPriceBackground.leadingAnchor, constant: 16),
+            
+            followLabel.centerYAnchor.constraint(equalTo: followPriceBackground.centerYAnchor),
+            followLabel.leadingAnchor.constraint(equalTo: followIcon.trailingAnchor, constant: 5),
+            
+            radioButton.centerYAnchor.constraint(equalTo: followPriceBackground.centerYAnchor),
+            radioButton.trailingAnchor.constraint(equalTo: followPriceBackground.trailingAnchor, constant: -16),
+            radioButton.heightAnchor.constraint(equalToConstant: 30),
+            radioButton.widthAnchor.constraint(equalToConstant: 50)
         ])
         
-        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 20))
+        
+        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 25))
         recommendTableView.tableHeaderView = headerView
         responseTableView.tableHeaderView = headerView
         
@@ -219,8 +285,8 @@ class SearchViewController: UIViewController {
     func updateStackViewVisibility() {
         stackView.isHidden = switchBool
         recommendTableView.isHidden = switchBool
-        responseTableView.isHidden = !switchBool
-        label.isHidden = !switchBool
+        
+        [responseTableView,label,showAllButton,followPriceBackground,followIcon,followLabel, radioButton].forEach({$0.isHidden = !switchBool})
     }
     
 //    MARK: - Button actions -
@@ -233,6 +299,20 @@ class SearchViewController: UIViewController {
     
     @objc func handleButton1() {
         print("lol")
+    }
+    
+    @objc func imageTapped() {
+        isSelect = !isSelect
+        if isSelect {
+            radioButton.setImage(UIImage(named: "radioOn"), for: .normal)
+        } else {
+            radioButton.setImage(UIImage(named: "radioOff"), for: .normal)
+        }
+        
+    }
+    
+    @objc func showAllButtonHandle() {
+        
     }
 
 //    MARK: - Fetching of Data (tickets information)
