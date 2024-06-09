@@ -28,7 +28,7 @@ class AdditionalCollectionViewCell: UICollectionViewCell {
     
     func setupUI() {
         self.backgroundColor = UIColor(hex: "#2F3035")
-        self.layer.cornerRadius = 8
+        self.layer.cornerRadius = 16
         
         [filterIcon, filterLabel].forEach({
             $0.translatesAutoresizingMaskIntoConstraints = false

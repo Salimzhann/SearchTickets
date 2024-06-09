@@ -14,6 +14,23 @@ class SearchViewController: UIViewController {
             updateStackViewVisibility()
         }
     }
+    
+    let changeButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "change"), for: .normal)
+        button.isHidden = true
+        button.addTarget(self, action: #selector(handleChangeButton), for: .touchUpInside)
+        return button
+    }()
+    
+    let returnButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "return"), for: .normal)
+        button.isHidden = true
+        button.addTarget(self, action: #selector(handleReturnButton), for: .touchUpInside)
+        return button
+    }()
+    
     let additionCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -25,7 +42,7 @@ class SearchViewController: UIViewController {
         return cv
     }()
     
-    let filterName: [String] = ["обратно", "24 фев, сб", "эконом", "Карта"]
+    let filterName: [String] = ["обратно", "24 фев, сб", "1,эконом", "Карта"]
     var keysArray: [String] = ["plus", "", "profile", "filter"]
     var isSelect: Bool = false
     
@@ -175,7 +192,7 @@ class SearchViewController: UIViewController {
         stackView.distribution = .fillEqually
         stackView.isHidden = switchBool
         
-        [backView, rectangleImage, fromTextField,toTextField, searchImage, airplaneImage, lineImage, stackView, recommendTableView, responseTableView, label, showAllButton,followPriceBackground , followLabel, followIcon, radioButton, additionCollectionView].forEach({
+        [backView, rectangleImage, fromTextField,toTextField, searchImage, returnButton, airplaneImage, lineImage, stackView, recommendTableView, responseTableView, label, showAllButton,followPriceBackground , followLabel, followIcon, radioButton, additionCollectionView, changeButton].forEach({
             $0.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview($0)
         })
@@ -255,7 +272,13 @@ class SearchViewController: UIViewController {
             additionCollectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: 160),
             additionCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             additionCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            additionCollectionView.heightAnchor.constraint(equalToConstant: 33)
+            additionCollectionView.heightAnchor.constraint(equalToConstant: 33),
+            
+            changeButton.topAnchor.constraint(equalTo: backView.topAnchor, constant: 13),
+            changeButton.trailingAnchor.constraint(equalTo: backView.trailingAnchor, constant: -16),
+            
+            returnButton.topAnchor.constraint(equalTo: backView.topAnchor, constant: 13),
+            returnButton.leadingAnchor.constraint(equalTo: backView.leadingAnchor, constant: 16)
         ])
         
         
@@ -306,11 +329,24 @@ class SearchViewController: UIViewController {
     func updateStackViewVisibility() {
         stackView.isHidden = switchBool
         recommendTableView.isHidden = switchBool
+        [stackView, recommendTableView, airplaneImage, searchImage].forEach({$0?.isHidden = switchBool})
         
-        [responseTableView,label,showAllButton,followPriceBackground,followIcon,followLabel, radioButton, additionCollectionView].forEach({$0.isHidden = !switchBool})
+        [responseTableView,label,changeButton, returnButton, showAllButton,followPriceBackground,followIcon,followLabel, radioButton, additionCollectionView].forEach({$0.isHidden = !switchBool})
     }
     
 //    MARK: - Button actions -
+    
+    @objc func handleReturnButton() {
+        switchBool = !switchBool
+        fromTextField.text = ""
+        toTextField.text = ""
+    }
+    
+    @objc func handleChangeButton() {
+        var tempText = fromTextField.text
+        fromTextField.text = toTextField.text
+        toTextField.text = tempText
+    }
         
     @objc func clearTextField(_ sender: UIButton) {
         if let textField = sender.superview as? UITextField {
