@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		196A96002C159AAD009566D3 /* AdditionalCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196A95FF2C159AAD009566D3 /* AdditionalCollectionViewCell.swift */; };
 		197CA5862C118F1F00D746EF /* RecTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197CA5852C118F1F00D746EF /* RecTableViewCell.swift */; };
 		197CA5882C11ADE200D746EF /* SearchResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197CA5872C11ADE200D746EF /* SearchResponse.swift */; };
 		197CA58B2C11AEC600D746EF /* SingerResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197CA58A2C11AEC600D746EF /* SingerResponse.swift */; };
@@ -29,6 +30,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		196A95FF2C159AAD009566D3 /* AdditionalCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdditionalCollectionViewCell.swift; sourceTree = "<group>"; };
 		197CA5852C118F1F00D746EF /* RecTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecTableViewCell.swift; sourceTree = "<group>"; };
 		197CA5872C11ADE200D746EF /* SearchResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResponse.swift; sourceTree = "<group>"; };
 		197CA58A2C11AEC600D746EF /* SingerResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingerResponse.swift; sourceTree = "<group>"; };
@@ -122,6 +124,7 @@
 				19A944872C102E5500A658AD /* MusicCollectionViewCell.swift */,
 				197CA5852C118F1F00D746EF /* RecTableViewCell.swift */,
 				197CA58C2C11BE0900D746EF /* ResponseTableViewCell.swift */,
+				196A95FF2C159AAD009566D3 /* AdditionalCollectionViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -221,6 +224,7 @@
 				19A9447B2C0EE04E00A658AD /* HotelsViewController.swift in Sources */,
 				19A9448E2C10522300A658AD /* SearchViewController.swift in Sources */,
 				19A944882C102E5500A658AD /* MusicCollectionViewCell.swift in Sources */,
+				196A96002C159AAD009566D3 /* AdditionalCollectionViewCell.swift in Sources */,
 				19A9448C2C104A7C00A658AD /* CustomButton.swift in Sources */,
 				19A944672C0EDF5100A658AD /* SceneDelegate.swift in Sources */,
 				19A944812C0EE07000A658AD /* ProfileViewController.swift in Sources */,

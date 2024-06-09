@@ -14,6 +14,19 @@ class SearchViewController: UIViewController {
             updateStackViewVisibility()
         }
     }
+    let additionCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        cv.showsHorizontalScrollIndicator = false
+        cv.register(AdditionalCollectionViewCell.self, forCellWithReuseIdentifier: AdditionalCollectionViewCell.identifier)
+        cv.backgroundColor = UIColor(hex: "#242529")
+        cv.isHidden = true
+        return cv
+    }()
+    
+    let filterName: [String] = ["обратно", "24 фев, сб", "эконом", "Карта"]
+    var keysArray: [String] = ["plus", "", "profile", "filter"]
     var isSelect: Bool = false
     
     let followPriceBackground: UIView = {
@@ -162,7 +175,7 @@ class SearchViewController: UIViewController {
         stackView.distribution = .fillEqually
         stackView.isHidden = switchBool
         
-        [backView, rectangleImage, fromTextField,toTextField, searchImage, airplaneImage, lineImage, stackView, recommendTableView, responseTableView, label, showAllButton,followPriceBackground , followLabel, followIcon, radioButton].forEach({
+        [backView, rectangleImage, fromTextField,toTextField, searchImage, airplaneImage, lineImage, stackView, recommendTableView, responseTableView, label, showAllButton,followPriceBackground , followLabel, followIcon, radioButton, additionCollectionView].forEach({
             $0.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview($0)
         })
@@ -237,7 +250,12 @@ class SearchViewController: UIViewController {
             radioButton.centerYAnchor.constraint(equalTo: followPriceBackground.centerYAnchor),
             radioButton.trailingAnchor.constraint(equalTo: followPriceBackground.trailingAnchor, constant: -16),
             radioButton.heightAnchor.constraint(equalToConstant: 30),
-            radioButton.widthAnchor.constraint(equalToConstant: 50)
+            radioButton.widthAnchor.constraint(equalToConstant: 50),
+            
+            additionCollectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: 160),
+            additionCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            additionCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            additionCollectionView.heightAnchor.constraint(equalToConstant: 33)
         ])
         
         
@@ -264,6 +282,9 @@ class SearchViewController: UIViewController {
         
         fromTextField.delegate = self
         toTextField.delegate = self
+        
+        additionCollectionView.dataSource = self
+        additionCollectionView.delegate = self
     }
     
     func addCancelButton(to textField: UITextField) {
@@ -286,7 +307,7 @@ class SearchViewController: UIViewController {
         stackView.isHidden = switchBool
         recommendTableView.isHidden = switchBool
         
-        [responseTableView,label,showAllButton,followPriceBackground,followIcon,followLabel, radioButton].forEach({$0.isHidden = !switchBool})
+        [responseTableView,label,showAllButton,followPriceBackground,followIcon,followLabel, radioButton, additionCollectionView].forEach({$0.isHidden = !switchBool})
     }
     
 //    MARK: - Button actions -
@@ -342,7 +363,24 @@ class SearchViewController: UIViewController {
 
 
 //MARK: - Extension of SearchController
-extension SearchViewController: UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
+extension SearchViewController: UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 4
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = additionCollectionView.dequeueReusableCell(withReuseIdentifier: AdditionalCollectionViewCell.identifier, for: indexPath) as! AdditionalCollectionViewCell
+        cell.configure(icon: keysArray[indexPath.item] , label: filterName[indexPath.item])
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let tempLabel = UILabel()
+        tempLabel.text = filterName[indexPath.item]
+        tempLabel.sizeToFit()
+        return CGSize(width: tempLabel.frame.width + 52, height: 33)
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tableView == recommendTableView {
             return countryArray.count
