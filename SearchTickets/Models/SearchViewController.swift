@@ -42,7 +42,7 @@ class SearchViewController: UIViewController {
         return cv
     }()
     
-    let filterName: [String] = ["обратно", "24 фев, сб", "1,эконом", "Карта"]
+    var filterName: [String] = ["обратно", "24 фев, сб", "1,эконом", "Карта"]
     var keysArray: [String] = ["plus", "", "profile", "filter"]
     var isSelect: Bool = false
     
@@ -179,6 +179,7 @@ class SearchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        currentDate()
     }
 //    MARK: - UI configuration
     func setupUI() {
@@ -318,6 +319,20 @@ class SearchViewController: UIViewController {
         cancelButton.addTarget(self, action: #selector(clearTextField(_:)), for: .touchUpInside)
         textField.rightView = cancelButton
         textField.rightViewMode = .whileEditing
+    }
+    
+    func currentDate() {
+        let currentDate = Date()
+
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "ru_RU")
+        dateFormatter.dateFormat = "dd MMM, EEE"
+
+        let currentDateString = dateFormatter.string(from: currentDate)
+
+        if let index = filterName.firstIndex(of: "24 фев, сб") {
+            filterName[index] = currentDateString
+        }
     }
     
     func showAlert(message: String) {
